@@ -1,0 +1,72 @@
+{% extends 'main/base.html' %}
+                {% block title %}{{title}}{% endblock %}
+                {% block cat %}
+                {% for item in genders %}
+                <a href="{% url 'gender' item.pk %}" class="list-group-item list-group-item-action " aria-current="true">
+                    {{item.gender}}
+                </a>
+                {% endfor %}
+                {% endblock %}
+
+
+{% block profile %}
+{% for item in persons %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <!--      {{ item.my_func }}-->
+                    <!--      {{ forloop.counter0 }}-->
+                    <!--      {% lorem 2 p random %}-->
+                    <a href="{% url 'profile' item.pk %}"> {{ item.name }} {{ item.last_name}}</a>
+                </div>
+                <div class="card-body">
+                    <div class="media">
+                        {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="" width='350' class="mr-3">
+                        {% else %}
+                        <img src="https://picsum.photos/seed/picsum/536/354" alt="Photo" width='350' class="mr-3">
+                        {% endif %}
+
+                        <div class="media-body">
+                            <h5 class="card-title">{{ item.first_name }} {{ item.last_name}}</h5>
+                            <p class="card-title">{{item.city}}</p>
+
+                            <p class="card-text">{{item.gender}}</p>
+                            <p class="card-text">{{item.birthday| date:'Y-m-d'}}</p>
+                            <a href="#" class="btn btn-primary">Read more...</a>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted">
+                    {{item.created_at|date:"Y:m:d H:i:s"}}
+                </div>
+
+            </div>
+{% endfor %}
+{%if page_obj.has_other_pages%}
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Назад</a>
+    </li>
+        {%for p in page_obj.paginator.page_range %}
+        {%if page_obj.number == p %}
+      <li class="page-item"><a class="page-link" href="#">{{p}}</a></li>
+        {%else %}
+      <li class="page-item"><a class="page-link" href="page={{p}}">{{p}}</a></li>
+        {%endif %}
+
+      {%endfor%}
+
+      {% if page_obj_has_next %}
+
+
+    <li class="page-item">
+      <a class="page-link" href="page = {{page_obj.next_page_number}}">Вперед</a>
+    </li>
+      {% endif %}
+  </ul>
+</nav>
+{%endif%}
+{% endblock %}

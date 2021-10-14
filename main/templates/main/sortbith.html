@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}
+                {% block title %}{{title}}{% endblock %}
+                {% block cat %}
+                {% for item in genders %}
+                <a href="{% url 'gender' item.pk %}" class="list-group-item list-group-item-action " aria-current="true">
+                    {{item.gender}}
+                </a>
+                {% endfor %}
+                {% endblock %}
+
+
+{% block profile %}
+{% for item in persons %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <!--      {{ item.my_func }}-->
+                    <!--      {{ forloop.counter0 }}-->
+                    <!--      {% lorem 2 p random %}-->
+                    Имя: {{ item.name }} {{ item.last_name}}
+                </div>
+                <div class="card-body">
+                    <div class="media">
+                        {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="" width='350' class="mr-3">
+                        {% else %}
+                        <img src="https://picsum.photos/seed/picsum/536/354" alt="Photo" width='350' class="mr-3">
+                        {% endif %}
+
+                        <div class="media-body">
+                            <h5 class="card-title">Имя Фамилия: {{item.name}} {{item.name}}</h5>
+
+                            <p class="card-text">Телефон: {{item.phone}}</p>
+                            <p class="card-text">Почта: {{item.email}}</p>
+                            <p class="card-text">Город: {{item.city}}</p>
+
+                            <p class="card-text">Пол: {{item.gender}}</p>
+                            <p class="card-text">День рождения: {{item.birthday| date:'Y-m-d'}}</p>
+                            <a href="#" class="btn btn-primary">Read more...</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted">
+                    {{item.created_at|date:"Y:m:d H:i:s"}}
+                </div>
+            </div>
+{% endfor %}
+{% endblock %}

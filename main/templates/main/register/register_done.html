@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Регистрация завершена{% endblock %}
+{% block profile %}
+<h2>Регистрация </h2>
+<p>Регистрация пользователя завершена</p>
+<p>На адрес электронной почты, указанный пользователем, выслано письмо для активации.</p>
+
+{% endblock %}
+<script type="module" src="{% static 'js/redirected.js' %}"></script>
